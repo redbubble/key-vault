@@ -1,12 +1,14 @@
 # KeyVault
 
-TODO: Write a gem description
+KeyVault manages all your secrets so they don't have to live in the repo.
+
+Currently only works with Rails 3+.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'key-vault'
+    gem 'key-vault', require: 'key_vault'
 
 And then execute:
 
@@ -18,7 +20,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Simply put all secrets that shouldn't be checked into your repo into
+
+    config/key_vault.yml
+
+in your rails app. Then use
+
+    KeyVault[:key]
+
+it. For example, with a file that contains
+
+    session_secret: this-is-super-secret
+
+you can use
+
+    AppName::Application.config.secret_token = KeyVault[:session_secret]
+
+to set your session secret token.
 
 ## Contributing
 
