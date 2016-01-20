@@ -18,7 +18,7 @@ module KeyVault
     end
 
     def values
-      @values ||= YAML.load(IO.read(Rails.root + "config/key_vault.yml")).symbolize_keys
+      @values ||= YAML.load(ERB.new(IO.read(Rails.root + "config/key_vault.yml")).result).symbolize_keys
     end
   end
 end
