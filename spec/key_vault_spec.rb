@@ -30,6 +30,7 @@ describe KeyVault do
     before do
       Rails.stub root: '/tmp/'
       FileUtils.mkdir '/tmp/config'
+      ENV['my-super-secret'] = 'super_super_secret'
     end
 
     after do
@@ -38,10 +39,11 @@ describe KeyVault do
 
     it 'reads key_vault.yml in the rails config folder' do
       File.open('/tmp/config/key_vault.yml', 'w') do |f|
-        f.puts({ session_secret: 'super_secret' }.to_yaml)
+        f.puts({ session_secret: 'super_secret', super_secret: "<%= ENV['my-super-secret'] %>" }.to_yaml)
       end
 
       KeyVault.values[:session_secret].should == 'super_secret'
+      KeyVault.values[:super_secret].should == 'super_super_secret'
     end
   end
 end
