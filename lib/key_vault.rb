@@ -27,7 +27,12 @@ module KeyVault
     end
 
     def vault_file
-      File.join(Rails.root, "config/key_vault/#{Rails.env}.yml")
+      files = [
+        File.join(Rails.root, "config/key_vault.yml")),
+        File.join(Rails.root, "config/key_vault/#{Rails.env}.yml")),
+      ]
+
+      files.select {|f| File.exist? f }.first
     end
   end
 end
